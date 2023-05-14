@@ -48,6 +48,16 @@ Motivated by this disparity, Ax64VM was conceived as a transformative wrapper, t
 
 As the development of Ax64VM unfolded, a deeper understanding emerged regarding the challenges faced by Android SoC CPUs. The limitations and disparities experienced on the Snapdragon 888 and similar chipsets revealed a need for a comprehensive solution that could empower Android devices to unleash the true potential of OpenGL acceleration.
 
-With this newfound knowledge, Ax64VM emerged as a testament to the relentless pursuit of innovation and the desire to empower the Android ecosystem. By weaving together VirGL's 3D acceleration, QEMU's virtualization capabilities, and the mystic powers of OpenGL, Ax64VM aspires to uplift Android, ensuring that devices powered by non-Apple Silicon ARM CPUs can also experience the transformative magic of accelerated graphics.
+With this newfound knowledge, Ax64VM emerged as a testament to the relentless pursuit of innovation and the desire to empower the Android ecosystem. By weaving together VirGL's 3D acceleration, QEMU's virtualization capabilities, and the mystic powers of OpenGL, Ax64VM aspires to uplift Android, ensuring that devices powered by non-Apple Silicon ARM CPUs can also experience the magic of accelerated graphics.
 
-In the enchanting realm of Ax64VM, Android is no longer left in the dust, but rather, it emerges as a platform capable of transcending limitations, embracing innovation, and empowering its users with the wondrous realms of OpenGL acceleration.
+## Contributing
+Unleash your arcane potential and contribute to the evolution of Ax64VM. Delve into the sacred guidelines outlined in CONTRIBUTING.md, where you may reveal bug reports, unveil new features, or conjure mesmerizing pull requests.
+
+## License
+?
+
+## Credits 
+Ax64VM is the creation of visionary developers, weaving their spells into reality:
+
+- Albert Starfield Wahyu Suryo Samudro (GitHub)
+- Questandachievement (GitHub)
