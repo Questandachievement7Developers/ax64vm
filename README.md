@@ -67,8 +67,6 @@ Ax64VM is the creation of visionary developers, weaving their spells into realit
 - Albert Starfield Wahyu Suryo Samudro (GitHub)
 - Questandachievement (GitHub)
 
-Unleash the captivating power of Ax64VM and explore the realms of accelerated 3D graphics within Termux Android. Let your imagination soar as you dive into a world crafted with VirGL's OpenGL acceleration and QEMU's mystical integration.
-
 ## License
 
 Ax64VM is licensed under the GPL-2.0 License. Feel free to explore, modify, and distribute the codebase in compliance with the terms and conditions of the GPL-2.0 License.
