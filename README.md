@@ -67,40 +67,6 @@ Ax64VM is the creation of visionary developers, weaving their spells into realit
 - Albert Starfield Wahyu Suryo Samudro (GitHub)
 - Questandachievement (GitHub)
 
-1. Ensure that you have the `git` package installed in Termux by executing the following command:
-
-   ```shell
-   $ pkg install git
-   ```
-
-2. Clone the Ax64VM GitHub repository by running the following command:
-
-   ```shell
-   $ git clone https://github.com/albertstarfield/Ax64VM.git
-   ```
-
-3. Navigate to the cloned repository by executing the following command:
-
-   ```shell
-   $ cd Ax64VM
-   ```
-
-4. Grant executable permissions to the `ax64vm.sh` script:
-
-   ```shell
-   $ chmod +x ./ax64vm.sh
-   ```
-
-5. Run the `ax64vm.sh` script to initiate the Ax64VM environment:
-
-   **Warning: Ensure that no other VNC server is running on port 5900.**
-
-   ```shell
-   $ ./ax64vm.sh
-   ```
-
-6. Connect to the Ax64VM display using a VNC viewer with the address `localhost:5900`.
-
 Unleash the captivating power of Ax64VM and explore the realms of accelerated 3D graphics within Termux Android. Let your imagination soar as you dive into a world crafted with VirGL's OpenGL acceleration and QEMU's mystical integration.
 
 ## License
