@@ -1,7 +1,7 @@
 # Ax64VM - VirGL OpenGL 3D Accelerated QEMU Wrapper for Termux Android
 
 ## Overview
-Enter the realm of Ax64VM, a mystical fusion of VirGL's 3D acceleration and QEMU's enigmatic embrace, crafted exclusively for Termux Android. With its intricate wrapper, Ax64VM beckons users to unlock the captivating powers of OpenGL and indulge in the mesmerizing world of accelerated 3D graphics.
+Enter the realm of Ax64VM, a mystical fusion of VirGL's 3D acceleration and QEMU's enigmatic embrace, crafted exclusively for Termux Android. With its intricate wrapper, Ax64VM beckons users to unlock the captivating powers of OpenGL and indulge in the mesmerizing world of accelerated 3D graphics but in a non accelerated CPU slow processing manner.
 
 
 ## Key Features
@@ -48,8 +48,15 @@ As the development of Ax64VM unfolded, a deeper understanding emerged regarding 
 
 With this newfound knowledge, Ax64VM emerged as a testament to the relentless pursuit of innovation and the desire to empower the Android ecosystem. By weaving together VirGL's 3D acceleration, QEMU's virtualization capabilities, and the mystic powers of OpenGL, Ax64VM aspires to uplift Android, ensuring that devices powered by non-Apple Silicon ARM CPUs can also experience the magic of accelerated graphics.
 
-## Contributing
-Unleash your arcane potential and contribute to the evolution of Ax64VM. Delve into the sacred guidelines outlined in CONTRIBUTING.md, where you may reveal bug reports, unveil new features, or conjure mesmerizing pull requests.
+## Issue Submission
+If you encounter any issues or have any questions, please submit an issue on the GitHub repository with the following details:
+
+- Subject: Briefly describe the issue you are facing
+- Logs: Attach the ax64vm.log file located in the working directory
+- Phone Model: Specify the model of your phone
+- Android/ROM Model: Provide information about your Android version or custom ROM
+
+Your feedback and bug reports are invaluable in improving Ax64VM and ensuring a seamless experience for all users.
 
 ## License
 Ax64VM is licensed under the GPL-2.0 License. Feel free to explore, modify, and distribute the codebase in compliance with the terms and conditions of the GPL-2.0 License.
