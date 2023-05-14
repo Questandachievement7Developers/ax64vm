@@ -1,7 +1,5 @@
 # Ax64VM - VirGL OpenGL 3D Accelerated QEMU Wrapper for Termux Android
 
-Ax64VM is a transformative wrapper that brings the arcane wonders of VirGL's OpenGL 3D acceleration to Termux Android. Embrace the power of accelerated 3D graphics within a mystical fusion of VirGL and QEMU.
-
 ## Overview
 Enter the realm of Ax64VM, a mystical fusion of VirGL's 3D acceleration and QEMU's enigmatic embrace, crafted exclusively for Termux Android. With its intricate wrapper, Ax64VM beckons users to unlock the captivating powers of OpenGL and indulge in the mesmerizing world of accelerated 3D graphics.
 
@@ -54,10 +52,77 @@ With this newfound knowledge, Ax64VM emerged as a testament to the relentless pu
 Unleash your arcane potential and contribute to the evolution of Ax64VM. Delve into the sacred guidelines outlined in CONTRIBUTING.md, where you may reveal bug reports, unveil new features, or conjure mesmerizing pull requests.
 
 ## License
-?
+Ax64VM is licensed under the GPL-2.0 License. Feel free to explore, modify, and distribute the codebase in compliance with the terms and conditions of the GPL-2.0 License.
 
 ## Credits 
 Ax64VM is the creation of visionary developers, weaving their spells into reality:
 
 - Albert Starfield Wahyu Suryo Samudro (GitHub)
 - Questandachievement (GitHub)
+
+```
+Certainly! Here's the revised version with the footer notes:
+
+```markdown
+# Ax64VM - VirGL OpenGL 3D Accelerated QEMU Wrapper for Termux Android
+
+Ax64VM is an enchanting wrapper that brings the mesmerizing powers of VirGL's OpenGL 3D acceleration to Termux Android. Embrace the realm of accelerated 3D graphics and experience a transformative fusion of VirGL and QEMU.
+
+## Key Features
+
+- **VirGL Wrapper:** Seamlessly integrate OpenGL-based 3D acceleration within Termux using Ax64VM's VirGL wrapper.
+- **OpenGL 3D Acceleration:** Unlock enhanced performance for running 3D applications and games with the captivating power of OpenGL.
+- **QEMU Integration:** Experience seamless integration with Termux through the enigmatic capabilities of QEMU's virtualization.
+
+## Default Configuration
+
+Ax64VM is equipped with a default configuration that conjures a 32GB qcow2 image, providing ample space for your virtualized environment. Additionally, it automatically downloads the performance-optimized Alpine ISO image to ensure optimal speed and compatibility.
+
+## Installation
+
+To embark on your journey into the realms of Ax64VM, follow these steps:
+
+1. Ensure that you have the `git` package installed in Termux by executing the following command:
+
+   ```shell
+   $ pkg install git
+   ```
+
+2. Clone the Ax64VM GitHub repository by running the following command:
+
+   ```shell
+   $ git clone https://github.com/albertstarfield/Ax64VM.git
+   ```
+
+3. Navigate to the cloned repository by executing the following command:
+
+   ```shell
+   $ cd Ax64VM
+   ```
+
+4. Grant executable permissions to the `ax64vm.sh` script:
+
+   ```shell
+   $ chmod +x ./ax64vm.sh
+   ```
+
+5. Run the `ax64vm.sh` script to initiate the Ax64VM environment:
+
+   **Warning: Ensure that no other VNC server is running on port 5900.**
+
+   ```shell
+   $ ./ax64vm.sh
+   ```
+
+6. Connect to the Ax64VM display using a VNC viewer with the address `localhost:5900`.
+
+Unleash the captivating power of Ax64VM and explore the realms of accelerated 3D graphics within Termux Android. Let your imagination soar as you dive into a world crafted with VirGL's OpenGL acceleration and QEMU's mystical integration.
+
+## License
+
+Ax64VM is licensed under the GPL-2.0 License. Feel free to explore, modify, and distribute the codebase in compliance with the terms and conditions of the GPL-2.0 License.
+
+---
+
+**Note:** Yes, I'm aware that there might be an abundance of marketing-style language or a touch of medieval wording in this description. I'm just experimenting with different writing styles. If you have any questions or critiques, feel free to message me. Your feedback is valuable. -Albert
+```
