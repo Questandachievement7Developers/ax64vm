@@ -42,13 +42,9 @@ Ax64VM provides a default configuration with a 32GB qcow2 image and automaticall
  6. Connect to the Ax64VM display using a VNC viewer with the address localhost:5900
 
 ## Background and Inspiration
-The genesis of Ax64VM finds its roots in the inspiration drawn from the availability of iOS UTM—an ingenious creation that enables the utilization of Metal for virtio-ramfb-gl, thereby empowering iOS devices to harness the full potential of OpenGL acceleration. This remarkable capability left Android, and indeed any non-Apple Silicon ARM-based device, in a state of deprivation, languishing without OpenGL acceleration. It became apparent that Android, with its vast ecosystem of devices, was in dire need of a solution.
+The development of Ax64VM was inspired by the availability of iOS UTM, which allows the utilization of Metal for virtio-ramfb-gl, essentially enabling OpenGL usage on iOS devices. However, Android, along with other non-Apple Silicon ARM-based devices, has been left in the dust, lacking OpenGL acceleration. This led to the creation of Ax64VM, aiming to fill this void.
 
-Motivated by this disparity, Ax64VM was conceived as a transformative wrapper, transcending the limitations imposed on Android systems. It aimed to bridge the gap and deliver OpenGL acceleration to the Android platform. The journey began with an exploration of the Snapdragon 888, a flagship Android SoC known for its prowess, only to discover that it, too, fell short in providing optimal performance.
-
-As the development of Ax64VM unfolded, a deeper understanding emerged regarding the challenges faced by Android SoC CPUs. The limitations and disparities experienced on the Snapdragon 888 and similar chipsets revealed a need for a comprehensive solution that could empower Android devices to unleash the true potential of OpenGL acceleration.
-
-With this newfound knowledge, Ax64VM emerged as a testament to the relentless pursuit of innovation and the desire to empower the Android ecosystem. By weaving together VirGL's 3D acceleration, QEMU's virtualization capabilities, and the mystic powers of OpenGL, Ax64VM aspires to uplift Android, ensuring that devices powered by non-Apple Silicon ARM CPUs can also experience the magic of accelerated graphics.
+During the development process, I gained insights into the limitations of Android ARM SoC CPUs, particularly evident when testing on the Snapdragon 888. The Snapdragon 888 proved to be slower and more power-hungry compared to my old iPhone Xs, which inevitably affects the performance of Ax64VM. Nonetheless, driven by my curiosity and the desire to explore the possibilities, I couldn't resist diving into this endeavor.
 
 ## Issue Submission
 If you encounter any issues or have any questions, please submit an issue on the GitHub repository with the following details:
