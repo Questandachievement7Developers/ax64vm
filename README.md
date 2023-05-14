@@ -1,5 +1,7 @@
 # Ax64VM - VirGL OpenGL 3D Accelerated QEMU Wrapper for Termux Android
 
+**⚠️ Warning: Ax64VM is currently in beta**
+
 ## Overview
 Enter the realm of Ax64VM, a mystical fusion of VirGL's 3D acceleration and QEMU's enigmatic embrace, crafted exclusively for Termux Android. With its intricate wrapper, Ax64VM beckons users to unlock the captivating powers of OpenGL and indulge in the mesmerizing world of accelerated 3D graphics but in a non accelerated CPU slow processing manner.
 
@@ -30,12 +32,12 @@ Ax64VM provides a default configuration with a 32GB qcow2 image and automaticall
    ```
 4. Grant executable permissions to the ax64vm.sh script
    ```shell
-   $ chmod +x ./ax64vm.sh
+   $ chmod +x ./ax64vm
    ```
 5. Run the ax64vm.sh script:
 **Warning: Ensure that no other VNC server is running on port 5900.**
    ```shell
-   $ ./ax64vm.sh
+   $ ./ax64vm
    ```
  6. Connect to the Ax64VM display using a VNC viewer with the address localhost:5900
 
