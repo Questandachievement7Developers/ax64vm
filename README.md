@@ -13,3 +13,8 @@ Ax64VM is a transformative wrapper that brings the arcane wonders of VirGL's Ope
 Ax64VM provides a default configuration with a 32GB qcow2 image and automatically downloads the performance-optimized Alpine ISO image.
 
 ## Installation
+1. Install the `git` package in Termux:
+
+   ```shell
+   $ pkg install git
+   ```
