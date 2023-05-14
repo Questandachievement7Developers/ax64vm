@@ -18,3 +18,21 @@ Ax64VM provides a default configuration with a 32GB qcow2 image and automaticall
    ```shell
    $ pkg install git
    ```
+2. Clone the Ax64VM repository
+   ```shell
+   $ git clone https://github.com/albertstarfield/Ax64VM.git
+   ```
+3. Navigate to the cloned repository
+   ```shell
+   $ cd Ax64VM
+   ```
+4. Grant executable permissions to the ax64vm.sh script
+   ```shell
+   $ chmod +x ./ax64vm.sh
+   ```
+5. Run the ax64vm.sh script:
+**Warning: Ensure that no other VNC server is running on port 5900.**
+   ```shell
+   $ ./ax64vm.sh
+   ```
+ 6. Connect to the Ax64VM display using a VNC viewer with the address localhost:5900
