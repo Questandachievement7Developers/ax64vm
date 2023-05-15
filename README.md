@@ -13,6 +13,7 @@ Enter the realm of Ax64VM, a mystical fusion of VirGL's 3D acceleration and QEMU
 - **VirGL Wrapper:** Seamlessly integrate OpenGL-based 3D acceleration within Termux using Ax64VM's VirGL wrapper.
 - **OpenGL 3D Acceleration:** Experience enhanced performance for running 3D applications and games with the power of OpenGL.
 - **QEMU Integration:** Enjoy seamless integration with Termux through QEMU's virtualization capabilities.
+- **Multithreading x64 translation:** This isn't a exclusive feature to say atleast but at least its on by default now
 
 ## Default Configuration
 
