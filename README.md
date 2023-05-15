@@ -1,6 +1,7 @@
 # Ax64VM - VirGL OpenGL 3D Accelerated QEMU Wrapper for Termux Android
 
 **⚠️ Warning: Ax64VM is currently in beta**
+
 **⚠️ Warning: Ax64VM for now is eating 4096MB RAM statically so 8GB phone required**
 
 ## Overview
