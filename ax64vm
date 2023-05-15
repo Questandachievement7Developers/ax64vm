@@ -1,0 +1,186 @@
+#!/bin/bash
+
+echo "" > ${logFile}
+export appTitle="Ax64VM"
+export logFile="./${logFile}.log"
+
+installDep(){
+set -e
+echo "Preparing Dependencies"
+pkg update -y -o Dpkg::Options::='--force-confold' --force-yes
+pkg upgrade -y -o Dpkg::Options::='--force-confold' --force-yes
+pkg install root-repo x11-repo tur-repo -y
+pkg update -y -o Dpkg::Options::='--force-confold' --force-yes
+pkg install ovmf x11vnc wget aria2 mesa-demos dialog fluxbox virglrenderer-android virglrenderer qemu-system-x86-64 qemu-utils vde2 tigervnc xorg-server xorg-server-xvfb -y
+echo "Should be done"
+
+set +e
+VNCSERVERDISPLAY=1
+}
+
+renderingBackend(){
+set -e
+EPOXY_USE_ANGLE=1 virgl_test_server --use-egl-surfaceless --use-gles >> ${logFile} 2>&1  & # you could remove the ${logFile} if you want to see the debug mode
+openGLBackendPID=$!
+echo "Launched openGL Server ${openGLBackendPID}"
+
+export GALLIUM_DRIVER=virpipe # to forcefully use the virgl_test_server opengl rather than llvm
+
+#vncserver -kill :${VNCSERVERDISPLAY}
+#vncserver :${VNCSERVERDISPLAY}
+
+portCalc=$((5900 + ${VNCSERVERDISPLAY}))
+#echo "Launched VNCServer at port ${portCalc}"
+
+Xvfb :${VNCSERVERDISPLAY} +render -shmem +xinerama +extension GLX +extension MIT-SHM +extension XTEST -extension SECURITY +extension XINERAMA +extension XFIXES +extension XFree86-Bigfont +extension RENDER +extension RANDR +extension COMPOSITE +extension DAMAGE +extension MIT-SCREEN-SAVER +extension DOUBLE-BUFFER +extension RECORD -extension DPMS +extension X-Resource +extension XVideo +extension XVideo-MotionCompensation +iglx -ac >> ${logFile} 2>&1 &
+xvfbPID=$!
+echo "Virtual Framebuffer ${xvfbPID}"
+sleep 2
+export DISPLAY=:${VNCSERVERDISPLAY}
+
+#echo "Launching Window Manager"
+fluxbox >> ${logFile} 2>&1 &
+fluxboxWMPID=$!
+
+echo "VNCServer x11vnc"
+#x11vnc -display :${VNCSERVERDISPLAY} -SecurityTypes None -cursor X -noxdamage -noxcomposite & 
+x11vnc -display :${VNCSERVERDISPLAY} -noncache >> ${logFile} 2>&1 &
+#x0vncserver -display :${VNCSERVERDISPLAY} -SecurityTypes None& 
+vncserverPID=$!
+
+set +e
+
+sleep 3
+glxinfo
+#glxgears
+
+}
+
+
+
+VMEngine(){
+echo "Launching VM!"
+CPU_FEATURES="+ssse3,+sse4.2,+popcnt,+avx,+aes,+xsaveopt,check,-xsavec,-pcid,-x2apic,-tsc-deadline,-hle,-invpcid,-rtm,-avx512f,-avx512dq,-rdseed,-avx512cd,-avx512bw,-avx512vl,-3dnowprefetch,vmx=off,hypervisor=off"
+#https://github.com/kholia/OSX-KVM/blob/master/OpenCore-Boot.sh
+ALLOCATED_RAM="4096" #it will allocate 100-$allocPercRuntime to translation cache since the x86 code need to be morph into arm
+CPU_SOCKETS="1"
+CPU_CORES="$(($(nproc --all) / 2))"
+CPU_THREADS="$(($(nproc --all) * 1))"
+
+allocPercRuntime=40 #adjusts your Balance between Runtime VM RAM vs VM TCG Translation Block cache
+
+
+allocPercTCG=$((100-${allocPercRuntime}))
+runtimeRAM=$(( ${ALLOCATED_RAM}  - ( ${ALLOCATED_RAM} * (100-${allocPercRuntime}) / 100 )))
+tcgCacheRAM=$(( ${ALLOCATED_RAM}  - ( ${ALLOCATED_RAM} * (100-${allocPercTCG}) / 100 )))
+
+echo "Runtime Ram ${runtimeRAM} tcgCacheRam ${tcgCacheRAM}"
+OVMFREPO=${PREFIX}/share/edk2.git/ovmf-x64
+
+args=(
+  --accel tcg,thread=multi,tb-size=${tcgCacheRAM},split-wx=off
+  -m "${runtimeRAM}" -cpu Penryn,kvm=off,vendor=GenuineIntel,vmware-cpuid-freq=on,"$CPU_FEATURES"
+  -machine q35,hmat=off,hpet=off
+  -drive if=pflash,format=raw,readonly=on,file="${OVMFREPO}/OVMF_CODE-pure-efi.fd"
+  -drive if=pflash,format=raw,file="${OVMFREPO}/OVMF_VARS-pure-efi.fd"
+  -smbios type=2
+  -usb -device usb-kbd -device usb-tablet
+  -smp "$CPU_THREADS",cores="$CPU_CORES",sockets="$CPU_SOCKETS"
+  -device usb-ehci,id=ehci
+  -device nec-usb-xhci,id=xhci
+  -global nec-usb-xhci.msi=on
+  -global ICH9-LPC.acpi-pci-hotplug-with-bridge-support=off
+  -device ich9-intel-hda -device hda-duplex
+  -device ich9-ahci,id=sata
+  -device ide-hd,bus=sata.2,drive=${appTitle}persistentDisk
+  -drive id=${appTitle}persistentDisk,if=none,file="./${appTitle}_PersistentDisk.qcow",format=qcow2
+  -netdev user,id=net0 -device virtio-net-pci,netdev=net0,id=net0,mac=52:54:00:c9:18:27
+  -net nic
+  -net user
+  -display gtk,gl=on
+  -rtc base=localtime,clock=host,driftfix=slew
+  -cdrom ./cdrom.iso
+  #This virtio gpu gl pci thanks to 
+  # !. https://www.kraxel.org/blog/2021/05/virtio-gpu-qemu-graphics-update/
+  # 2. https://docs.getutm.app/updates/v4.1/ (shows that openGL acceleration only* for Apple Devices)
+  -device virtio-vga-gl
+  -device virtio-balloon-pci
+  -device virtio-rng-pci
+  -full-screen
+  -global ICH9-LPC.disable_s3=1
+  -global ICH9-LPC.disable_s4=1
+  #-cdrom ./mt86plus_6.20_64.iso
+)
+echo "VM Launched!"
+qemu-system-x86_64 "${args[@]}" >> ${logFile} 2>&1
+echo "Exiting!"
+}
+
+
+grabTerminationHandler(){
+#rather than powering off and flushing the translated block completely and redo all the slowness all over again we can just save it as a state
+echo "stub" 
+vncserver -kill :${VNCSERVERDISPLAY}
+kill -9 ${openGLBackendPID} ${xvfbPID} ${fluxboxWMPID} ${vncserverPID} ${logCleanerPID}
+
+}
+
+loadStateIfExists(){
+echo "stub"
+}
+
+logCleaner(){
+while true; do
+sleep 300
+echo "Cleaning Log"
+echo "" > ${logFile}
+done
+}
+
+checkRequirementStorage(){
+echo "Checking!"
+linkDefaultISO="https://dl-cdn.alpinelinux.org/alpine/v3.18/releases/x86_64/alpine-extended-3.18.0-x86_64.iso"
+if [ ! -f "./cdrom.iso" ]; then
+echo "None of the OS ISO is detected!"
+dialog --msgbox "Attempting to download Alpine ISO" 10 30
+dialog --msgbox "However if you wanted another OS you can ctrl+c and replace the cdrom.iso with other OS iso on the working directory" 10 30
+aria2c --max-connection-per-server=16 "${linkDefaultISO}" -o "./cdrom.iso"
+fi
+
+if [ ! -f "./${appTitle}_PersistentDisk.qcow" ]; then
+echo "Creating Persistent qcow disk"
+qemu-img create -f qcow2 "./${appTitle}_PersistentDisk.qcow" 32G
+echo "Should be done!"
+sleep 5
+fi
+}
+
+main(){
+echo "Installing Dependencies"
+dialog --title ${appTitle} --gauge "Booting Up" 10 40 5 &
+installDep
+sleep 1
+dialog --title ${appTitle} --gauge "Booting Up" 10 40 10 &
+sleep 1
+renderingBackend >> ${logFile} 2>&1
+dialog --title ${appTitle} --gauge "Booting Up" 10 40 66 &
+sleep 1
+loadStateIfExists >> ${logFile} 2>&1
+dialog --title ${appTitle} --gauge "Booting Up" 10 40 89 &
+checkRequirementStorage
+echo "Executing VM"
+sleep 1
+dialog --title ${appTitle} --gauge "Booting Up" 10 40 100 &
+sleep 1
+logCleaner >> ${logFile} 2>&1 &
+export logCleanerPID=$!
+dialog --msgbox "Your VM Should be accessible through VNC Port 5900, However if you wanted to terminate the VM do single ctrl+c in here" 10 30 &
+VMEngine >> ${logFile} 2>&1
+grabTerminationHandler >> ${logFile} 2>&1
+
+#----
+echo "Execution Ended!"
+cat ${logFile}
+}
+
+main
