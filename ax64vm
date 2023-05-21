@@ -11,7 +11,7 @@ pkg update -y -o Dpkg::Options::='--force-confold' --force-yes
 pkg upgrade -y -o Dpkg::Options::='--force-confold' --force-yes
 pkg install root-repo x11-repo tur-repo -y
 pkg update -y -o Dpkg::Options::='--force-confold' --force-yes
-pkg install ovmf x11vnc wget aria2 mesa-demos dialog fluxbox virglrenderer-android virglrenderer qemu-system-x86-64 qemu-utils vde2 tigervnc xorg-server xorg-server-xvfb -y
+pkg install ovmf x11vnc wget aria2 git mesa-demos dialog fluxbox virglrenderer-android virglrenderer qemu-system-x86-64 qemu-utils vde2 tigervnc xorg-server xorg-server-xvfb -y
 echo "Should be done"
 
 set +e
@@ -145,9 +145,13 @@ echo "None of the OS ISO is detected!"
 dialog --msgbox "Attempting to download Alpine ISO" 10 30
 dialog --msgbox "However if you wanted another OS you can ctrl+c and replace the cdrom.iso with other OS iso on the working directory" 10 30
 aria2c --max-connection-per-server=16 "${linkDefaultISO}" -o "./cdrom.iso"
+#stub to be worked on optimized qcow2 baseImage for the ax64vm
+
 fi
 
 if [ ! -f "./${appTitle}_PersistentDisk.qcow" ]; then
+git clone https://github.com/Questandachievement7Developers/ax64vm_baseImage
+echo "Done" 
 echo "Creating Persistent qcow disk"
 qemu-img create -f qcow2 "./${appTitle}_PersistentDisk.qcow" 32G
 echo "Should be done!"
