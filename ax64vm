@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo "" > ${logFile}
 export appTitle="Ax64VM"
-export logFile="./${logFile}.log"
+export logFile="./${appTitle}.log"
+echo "" > ${logFile}
 
 installDep(){
 set -e
@@ -156,31 +156,36 @@ fi
 }
 
 main(){
-echo "Installing Dependencies"
-dialog --title ${appTitle} --gauge "Booting Up" 10 40 5 &
-installDep
-sleep 1
-dialog --title ${appTitle} --gauge "Booting Up" 10 40 10 &
-sleep 1
-renderingBackend >> ${logFile} 2>&1
-dialog --title ${appTitle} --gauge "Booting Up" 10 40 66 &
-sleep 1
-loadStateIfExists >> ${logFile} 2>&1
-dialog --title ${appTitle} --gauge "Booting Up" 10 40 89 &
-checkRequirementStorage
-echo "Executing VM"
-sleep 1
-dialog --title ${appTitle} --gauge "Booting Up" 10 40 100 &
-sleep 1
-logCleaner >> ${logFile} 2>&1 &
-export logCleanerPID=$!
-dialog --msgbox "Your VM Should be accessible through VNC Port 5900, However if you wanted to terminate the VM do single ctrl+c in here" 10 30 &
-VMEngine >> ${logFile} 2>&1
-grabTerminationHandler >> ${logFile} 2>&1
-
+  if [ "${1}" == "pcModeDebug" ]; then
+    echo "DebugModeEnabled"
+    checkRequirementStorage
+    VMEngine
+  else
+    echo "Installing Dependencies"
+    dialog --title ${appTitle} --gauge "Booting Up" 10 40 5 &
+    installDep
+    sleep 1
+    dialog --title ${appTitle} --gauge "Booting Up" 10 40 10 &
+    sleep 1
+    renderingBackend >> ${logFile} 2>&1
+    dialog --title ${appTitle} --gauge "Booting Up" 10 40 66 &
+    sleep 1
+    loadStateIfExists >> ${logFile} 2>&1
+    dialog --title ${appTitle} --gauge "Booting Up" 10 40 89 &
+    checkRequirementStorage
+    echo "Executing VM"
+    sleep 1
+    dialog --title ${appTitle} --gauge "Booting Up" 10 40 100 &
+    sleep 1
+    logCleaner >> ${logFile} 2>&1 &
+    export logCleanerPID=$!
+    dialog --msgbox "Your VM Should be accessible through VNC Port 5900, However if you wanted to terminate the VM do single ctrl+c in here" 10 30 &
+    VMEngine >> ${logFile} 2>&1
+    grabTerminationHandler >> ${logFile} 2>&1
+  fi
 #----
 echo "Execution Ended!"
 cat ${logFile}
 }
 
-main
+main ${1}
