@@ -44,7 +44,7 @@ fluxboxWMPID=$!
 
 echo "VNCServer x11vnc"
 #x11vnc -display :${VNCSERVERDISPLAY} -SecurityTypes None -cursor X -noxdamage -noxcomposite & 
-x11vnc -display :${VNCSERVERDISPLAY} -noncache >> ${logFile} 2>&1 &
+x11vnc -loop -display :${VNCSERVERDISPLAY} -noncache >> ${logFile} 2>&1 &
 #x0vncserver -display :${VNCSERVERDISPLAY} -SecurityTypes None& 
 vncserverPID=$!
 
